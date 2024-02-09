@@ -11,13 +11,13 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-const jane = await Movie.create({
-  name: "Vikram",
-  poster: "https://wallpapercave.com/vikram-movie-kamal-haasan-wallpapers",
-  rating: 10,
-  summary: "good",
-  trailer: "https://www.youtube.com/watch?v=OKBMCL-frPU",
-});
+// const jane = await Movie.create({
+//   name: "Vikram",
+//   poster: "https://wallpapercave.com/vikram-movie-kamal-haasan-wallpapers",
+//   rating: 10,
+//   summary: "good",
+//   trailer: "https://www.youtube.com/watch?v=OKBMCL-frPU",
+// });
 
 const app = express();
 app.use(express.json());
