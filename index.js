@@ -1,5 +1,5 @@
 import express from "express";
-
+import cors from "cors";
 import { sequelize } from "./config.js";
 import { Movie } from "./models/movies.js";
 import moviesRouter from "./routes/movies-route.js";
@@ -23,7 +23,7 @@ try {
 
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 app.use("/movies", moviesRouter);
 app.use("/users", usersRouter);
 const PORT = process.env.PORT;
