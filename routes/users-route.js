@@ -3,6 +3,7 @@ import express from "express";
 const router = express.Router();
 import userObject from "../controllers/users-controller.js";
 import { auth } from "../middlewares/auth.js";
+
 router
   .route("/")
   .get(userObject.getUsers)

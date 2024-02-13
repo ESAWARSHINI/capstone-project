@@ -6,7 +6,7 @@ const Session = sequelize.define(
   {
     // Model attributes are defined here
     userid: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     token: {

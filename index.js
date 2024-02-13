@@ -98,6 +98,5 @@ app.post("/users/pic", upload.single("avatar"), function (req, res, next) {
   console.log(req.file);
   console.log(req.body);
 });
-//app.post("/users/cpic", cloudinary.uploader.upload("avatar"));
 
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
