@@ -5,7 +5,7 @@ import userObject from "../controllers/users-controller.js";
 import { auth } from "../middlewares/auth.js";
 router
   .route("/")
-  .get(auth, userObject.getUsers)
+  .get(userObject.getUsers)
   //Post in Table
   .post(userObject.insertUsers);
 

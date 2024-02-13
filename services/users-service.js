@@ -1,5 +1,5 @@
 import { SignUp } from "../models/users.js";
-
+import { Session } from "../models/sessions.js";
 async function getUserFunction() {
   return await SignUp.findAll();
 }
@@ -26,6 +26,10 @@ async function insertUserFunction(username, password) {
   }
 }
 
+async function createSessionFunction(userid, token) {
+  return await Session.create({ userid, token });
+}
+
 async function checkUserFunction(username) {
   const obj = await SignUp.findOne({
     where: {
@@ -40,4 +44,5 @@ export default {
   getUserFunction,
   checkUserFunction,
   searchFunction,
+  createSessionFunction,
 };
