@@ -1,4 +1,4 @@
-import { Movie } from "../movies.js";
+import { Movie } from "../models/movies.js";
 import movieService from "../services/movies-service.js";
 async function getMovies(request, response) {
   // "/" ---> API endpoint

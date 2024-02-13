@@ -1,4 +1,4 @@
-import { Movie } from "../movies.js";
+import { Movie } from "../models/movies.js";
 
 async function getFunction() {
   return await Movie.findAll({
