@@ -7,7 +7,7 @@ router
   .route("/")
   .get(auth, userObject.getUsers)
   //Post in Table
-  .post(auth, userObject.insertUsers);
+  .post(userObject.insertUsers);
 
 router.route("/login").post(userObject.checkUser);
 
