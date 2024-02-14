@@ -6,10 +6,10 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 
 import { sequelize } from "./config.js";
-import { Movie } from "./models/movies.js";
-import { Access } from "./models/access.js";
 
-import moviesRouter from "./routes/movies-route.js";
+import { Access } from "./models/access.js";
+import booksRouter from "./routes/books-route.js";
+//import moviesRouter from "./routes/movies-route.js";
 import usersRouter from "./routes/users-route.js";
 
 const storage = multer.diskStorage({
@@ -80,7 +80,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
 
-app.use("/movies", moviesRouter);
+app.use("/books", booksRouter);
 app.use("/users", usersRouter);
 
 const PORT = process.env.PORT;

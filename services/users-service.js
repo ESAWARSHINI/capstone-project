@@ -20,9 +20,9 @@ async function searchFunction(search) {
   return searchResult;
 }
 
-async function insertUserFunction(username, password) {
+async function insertUserFunction(username, password, roleid) {
   try {
-    return await SignUp.create({ username, password });
+    return await SignUp.create({ username, password, roleid });
   } catch (error) {
     return { msg: error.errors.map((ele) => ele.message).join() };
   }
@@ -90,7 +90,7 @@ async function deleteProfileFunction(token) {
 
   const userRole = await SignUp.findOne({
     where: {
-      userid: id,
+      id: id,
     },
   });
   const rid = userRole.roleid;

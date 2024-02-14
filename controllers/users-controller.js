@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
-import { Movie } from "../models/movies.js";
 
 import userService from "../services/users-service.js";
 import jwt from "jsonwebtoken";
@@ -22,14 +21,16 @@ async function genHashPassword(password) {
 }
 async function insertUsers(request, response) {
   console.log(request.body);
-  const { username, password } = request.body;
+  const { username, password, roleid } = request.body;
   if (password.length < 8) {
     response
       .status(400)
       .send({ msg: "Password length must be greater than 8" });
   } else {
     const hashPassword = await genHashPassword(password);
-    response.send(await userService.insertUserFunction(username, hashPassword));
+    response.send(
+      await userService.insertUserFunction(username, hashPassword, roleid)
+    );
   }
 }
 
