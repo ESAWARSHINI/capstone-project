@@ -10,8 +10,8 @@ const Access = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    role: {
-      type: DataTypes.INTEGER,
+    rolename: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },

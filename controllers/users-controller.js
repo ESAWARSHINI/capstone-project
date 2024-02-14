@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-
+import { v2 as cloudinary } from "cloudinary";
 import { Movie } from "../models/movies.js";
 
 import userService from "../services/users-service.js";
@@ -64,10 +64,68 @@ async function logoutProfile(request, response) {
   response.send(await userService.logoutProfileFunction(token));
 }
 
+async function userPic(req, res) {
+  cloudinary.config({
+    secure: true,
+  });
+
+  console.log(process.env.CLOUDINARY_URL);
+  // CLOUDINARY_URL=cloudinary://592113388331896:pZacpSZWFzH7oi-ILHcwGozyiSY@dngylxf2d
+  // Log the configuration
+  console.log(cloudinary.config());
+
+  /////////////////////////
+  // Uploads an image file
+  /////////////////////////
+  const uploadImage = async (imagePath) => {
+    // Use the uploaded file's name as the asset's public ID and
+    // allow overwriting the asset with new versions
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: true,
+    };
+
+    try {
+      // Upload the image
+      const result = await cloudinary.uploader.upload(imagePath, options);
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  (async () => {
+    // Set the image to upload
+    const imagePath = req.file.path;
+
+    // Upload the image
+    const publicId = await uploadImage(imagePath);
+    console.log("publicid : " + publicId);
+    res.send({ msg: "uploaded", secure_url: publicId.secure_url });
+  })();
+}
+
+async function deleteProfile(request, response) {
+  const token = request.header("x-auth-token");
+  const { id } = request.params;
+
+  const rolename = await userService.deleteProfileFunction(token);
+  if (rolename == "super-user") {
+    console.log(id);
+    const obj = await userService.deleteFunction(id);
+    obj ? response.send("deleted") : response.status(404).send(NOT_FOUND_MSG);
+  } else {
+    response.send({ msg: "you do not have access" });
+  }
+}
+
 export default {
   getUsers,
   insertUsers,
   checkUser,
   updateProfile,
   logoutProfile,
+  userPic,
+  deleteProfile,
 };

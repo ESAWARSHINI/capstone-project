@@ -7,6 +7,8 @@ import { v2 as cloudinary } from "cloudinary";
 
 import { sequelize } from "./config.js";
 import { Movie } from "./models/movies.js";
+import { Access } from "./models/access.js";
+
 import moviesRouter from "./routes/movies-route.js";
 import usersRouter from "./routes/users-route.js";
 
@@ -25,36 +27,36 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-cloudinary.config({
-  secure: true,
-});
+// cloudinary.config({
+//   secure: true,
+// });
 
-console.log(process.env.CLOUDINARY_URL);
-// CLOUDINARY_URL=cloudinary://592113388331896:pZacpSZWFzH7oi-ILHcwGozyiSY@dngylxf2d
-// Log the configuration
-console.log(cloudinary.config());
+// console.log(process.env.CLOUDINARY_URL);
+// // CLOUDINARY_URL=cloudinary://592113388331896:pZacpSZWFzH7oi-ILHcwGozyiSY@dngylxf2d
+// // Log the configuration
+// console.log(cloudinary.config());
 
-/////////////////////////
-// Uploads an image file
-/////////////////////////
-const uploadImage = async (imagePath) => {
-  // Use the uploaded file's name as the asset's public ID and
-  // allow overwriting the asset with new versions
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  };
+// /////////////////////////
+// // Uploads an image file
+// /////////////////////////
+// const uploadImage = async (imagePath) => {
+//   // Use the uploaded file's name as the asset's public ID and
+//   // allow overwriting the asset with new versions
+//   const options = {
+//     use_filename: true,
+//     unique_filename: false,
+//     overwrite: true,
+//   };
 
-  try {
-    // Upload the image
-    const result = await cloudinary.uploader.upload(imagePath, options);
-    console.log(result);
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
-};
+//   try {
+//     // Upload the image
+//     const result = await cloudinary.uploader.upload(imagePath, options);
+//     console.log(result);
+//     return result;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 try {
   await sequelize.authenticate();
@@ -85,19 +87,19 @@ const PORT = process.env.PORT;
 app.get("/", function (request, response) {
   response.send("🙋‍♂️, 🌏 🎊✨🤩");
 });
-app.post("/users/pic", upload.single("avatar"), function (req, res, next) {
-  (async () => {
-    // Set the image to upload
-    const imagePath = req.file.path;
+// app.post("/users/pic", upload.single("avatar"), function (req, res, next) {
+//   (async () => {
+//     // Set the image to upload
+//     const imagePath = req.file.path;
 
-    // Upload the image
-    const publicId = await uploadImage(imagePath);
-    console.log("publicid : " + publicId);
-    res.send({ msg: "uploaded", secure_url: publicId.secure_url });
-  })();
+//     // Upload the image
+//     const publicId = await uploadImage(imagePath);
+//     console.log("publicid : " + publicId);
+//     res.send({ msg: "uploaded", secure_url: publicId.secure_url });
+//   })();
 
-  console.log("file :" + req.file);
-  console.log(req.body);
-});
+//   console.log("file :" + req.file);
+//   console.log(req.body);
+// });
 
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));

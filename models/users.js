@@ -17,6 +17,10 @@ const SignUp = sequelize.define(
     profile: {
       type: DataTypes.STRING(1000),
     },
+    roleid: {
+      type: DataTypes.INTEGER,
+      defaultValue: 2,
+    },
   },
   {
     // Other model options go here

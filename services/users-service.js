@@ -1,5 +1,7 @@
 import { SignUp } from "../models/users.js";
 import { Session } from "../models/sessions.js";
+import { Access } from "../models/access.js";
+
 async function getUserFunction() {
   return await SignUp.findAll();
 }
@@ -77,6 +79,41 @@ async function logoutProfileFunction(token) {
   return res;
 }
 
+async function deleteProfileFunction(token) {
+  const userSession = await Session.findOne({
+    where: {
+      token: token,
+      expiry: "no",
+    },
+  });
+  const id = userSession.userid;
+
+  const userRole = await SignUp.findOne({
+    where: {
+      userid: id,
+    },
+  });
+  const rid = userRole.roleid;
+  console.log("rid :" + rid);
+
+  const userAccess = await Access.findOne({
+    where: {
+      roleid: rid,
+    },
+  });
+  const rname = userAccess.rolename;
+  console.log("rolename :" + rname);
+  return rname;
+}
+
+async function deleteFunction(id) {
+  return await SignUp.destroy({
+    where: {
+      id: id,
+    },
+  });
+}
+
 export default {
   insertUserFunction,
   getUserFunction,
@@ -85,4 +122,6 @@ export default {
   createSessionFunction,
   updateProfileFunction,
   logoutProfileFunction,
+  deleteProfileFunction,
+  deleteFunction,
 };
