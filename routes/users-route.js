@@ -11,5 +11,7 @@ router
   .post(userObject.insertUsers);
 
 router.route("/login").post(userObject.checkUser);
+router.route("/profile").post(userObject.updateProfile);
+router.route("/logout").post(userObject.logoutProfile);
 
 export default router;

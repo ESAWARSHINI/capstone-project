@@ -4,6 +4,7 @@ import morgan from "morgan";
 import path from "path";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
+
 import { sequelize } from "./config.js";
 import { Movie } from "./models/movies.js";
 import moviesRouter from "./routes/movies-route.js";
@@ -48,7 +49,7 @@ const uploadImage = async (imagePath) => {
   try {
     // Upload the image
     const result = await cloudinary.uploader.upload(imagePath, options);
-    //console.log(result);
+    console.log(result);
     return result;
   } catch (error) {
     console.error(error);
@@ -91,11 +92,11 @@ app.post("/users/pic", upload.single("avatar"), function (req, res, next) {
 
     // Upload the image
     const publicId = await uploadImage(imagePath);
-    console.log(publicId);
-    res.send({ imageUrl: publicId.secure_url, msg: "uploaded" });
+    console.log("publicid : " + publicId);
+    res.send({ msg: "uploaded", secure_url: publicId.secure_url });
   })();
 
-  console.log(req.file);
+  console.log("file :" + req.file);
   console.log(req.body);
 });
 

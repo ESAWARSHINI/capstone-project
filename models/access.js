@@ -1,26 +1,23 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config.js";
 
-const Session = sequelize.define(
-  "Session",
+const Access = sequelize.define(
+  "Access",
   {
     // Model attributes are defined here
-    userid: {
+    roleid: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
     },
-    token: {
-      type: DataTypes.STRING,
+    role: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    expiry: {
-      type: DataTypes.STRING,
-      defaultValue: "no",
     },
   },
   {
     // Other model options go here
   }
 );
-//console.log(SignUp === sequelize.models.SignUp); // true
-export { Session };
+// true
+export { Access };

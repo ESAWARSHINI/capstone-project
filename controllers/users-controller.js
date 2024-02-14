@@ -52,4 +52,22 @@ async function checkUser(request, response) {
   }
 }
 
-export default { getUsers, insertUsers, checkUser };
+async function updateProfile(request, response) {
+  const { token, profile } = request.body;
+
+  response.send(await userService.updateProfileFunction(token, profile));
+}
+
+async function logoutProfile(request, response) {
+  const token = request.header("x-auth-token");
+
+  response.send(await userService.logoutProfileFunction(token));
+}
+
+export default {
+  getUsers,
+  insertUsers,
+  checkUser,
+  updateProfile,
+  logoutProfile,
+};

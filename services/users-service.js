@@ -39,10 +39,50 @@ async function checkUserFunction(username) {
   return obj;
 }
 
+async function updateProfileFunction(token, profile) {
+  const NOT_FOUND_MSG = { msg: "user not found" };
+
+  const userSession = await Session.findOne({
+    where: {
+      token: token,
+    },
+  });
+  const id = userSession.toJSON().userid;
+
+  const obj = await SignUp.update(
+    { profile },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  //response.send(obj ? obj : NOT_FOUND_MSG);
+  const res = obj ? obj : "error";
+  return res;
+}
+
+async function logoutProfileFunction(token) {
+  const NOT_FOUND_MSG = { msg: "user not found" };
+  const obj = await Session.update(
+    { expiry: "yes" },
+    {
+      where: {
+        token: token,
+      },
+    }
+  );
+  //response.send(obj ? obj : NOT_FOUND_MSG);
+  const res = obj ? obj : "error";
+  return res;
+}
+
 export default {
   insertUserFunction,
   getUserFunction,
   checkUserFunction,
   searchFunction,
   createSessionFunction,
+  updateProfileFunction,
+  logoutProfileFunction,
 };
