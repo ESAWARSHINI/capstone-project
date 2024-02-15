@@ -49,7 +49,7 @@ async function updateProfileFunction(token, profile) {
       token: token,
     },
   });
-  const id = userSession.toJSON().userid;
+  const id = userSession.userid;
 
   const obj = await SignUp.update(
     { profile },
@@ -59,8 +59,10 @@ async function updateProfileFunction(token, profile) {
       },
     }
   );
+
   //response.send(obj ? obj : NOT_FOUND_MSG);
-  const res = obj ? obj : "error";
+  const res =
+    obj[0] >= 1 ? { msg: "Profile Updated" } : { msg: "cannot upload profile" };
   return res;
 }
 
@@ -71,11 +73,13 @@ async function logoutProfileFunction(token) {
     {
       where: {
         token: token,
+        expiry: "no",
       },
     }
   );
   //response.send(obj ? obj : NOT_FOUND_MSG);
-  const res = obj ? obj : "error";
+  const res =
+    obj[0] >= 1 ? { msg: "logout successful" } : { msg: "not logged in" };
   return res;
 }
 

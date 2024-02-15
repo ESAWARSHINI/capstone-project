@@ -28,8 +28,8 @@ router
   .post(userObject.insertUsers);
 
 router.route("/login").post(userObject.checkUser);
-router.route("/profile").post(userObject.updateProfile);
-router.route("/logout").post(userObject.logoutProfile);
-router.route("/:id").delete(userObject.deleteProfile);
+router.route("/profile").post(auth, userObject.updateProfile);
+router.route("/logout").post(auth, userObject.logoutProfile);
+router.route("/:id").delete(auth, userObject.deleteProfile);
 router.route("/pic").post(upload.single("avatar"), userObject.userPic);
 export default router;

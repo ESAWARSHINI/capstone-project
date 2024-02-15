@@ -8,12 +8,12 @@ async function insertBookFunction(title, author, genre, description, rating) {
   return await Book.create({ title, author, genre, description, rating });
 }
 
-async function updateBookFunction(title) {
+async function updateBookFunction(author, id) {
   return await Book.update(
-    { title },
+    { author },
     {
       where: {
-        title: "neha",
+        id: id,
       },
     }
   );

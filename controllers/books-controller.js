@@ -33,11 +33,15 @@ async function insertBook(request, response) {
 
 async function updateBook(request, response) {
   console.log(request.body);
-  const { title } = request.body;
+
+  const { author, id } = request.body;
   const NOT_FOUND_MSG = { msg: "book not found" };
-  const obj = await bookService.updateBookFunction(title);
+  const obj = await bookService.updateBookFunction(author, id);
   //response.send(obj ? obj : NOT_FOUND_MSG);
-  obj ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
+  console.log(obj);
+  obj[0] >= 1
+    ? response.send({ msg: "updated" })
+    : response.status(404).send(NOT_FOUND_MSG);
 }
 
 async function deleteBook(request, response) {

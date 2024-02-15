@@ -9,17 +9,17 @@ router
   .get(auth, totalObject.getAllBooks)
 
   //post in table
-  .post(totalObject.insertBook)
+  .post(auth, totalObject.insertBook)
 
   //update from body
-  .put(totalObject.updateBook);
+  .put(auth, totalObject.updateBook);
 
 router
   .route("/:id")
   //Delete from users
-  .delete(totalObject.deleteBook)
+  .delete(auth, totalObject.deleteBook)
 
   //Find by id
-  .get(totalObject.getBookById);
+  .get(auth, totalObject.getBookById);
 
 export default router;

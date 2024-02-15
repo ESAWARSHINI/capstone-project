@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-
+import { Session } from "../models/sessions.js";
 const auth = async (request, response, next) => {
   //next -> to call the callback function
   try {
@@ -17,7 +17,7 @@ const auth = async (request, response, next) => {
       response.status(401).send({ msg: "login expired" });
     }
   } catch (error) {
-    response.status(401).send({ msg: error.message });
+    response.status(403).send({ msg: error.message });
   }
 };
 

@@ -54,7 +54,8 @@ async function checkUser(request, response) {
 }
 
 async function updateProfile(request, response) {
-  const { token, profile } = request.body;
+  const token = request.header("x-auth-token");
+  const { profile } = request.body;
 
   response.send(await userService.updateProfileFunction(token, profile));
 }
@@ -112,10 +113,13 @@ async function deleteProfile(request, response) {
   const { id } = request.params;
 
   const rolename = await userService.deleteProfileFunction(token);
-  if (rolename == "super-user") {
+  if (rolename == "superUser") {
     console.log(id);
     const obj = await userService.deleteFunction(id);
-    obj ? response.send("deleted") : response.status(404).send(NOT_FOUND_MSG);
+    console.log("object :" + obj);
+    obj
+      ? response.send({ msg: "deleted" })
+      : response.status(404).send({ msg: "cannot Delete" });
   } else {
     response.send({ msg: "you do not have access" });
   }

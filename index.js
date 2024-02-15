@@ -101,5 +101,7 @@ app.get("/", function (request, response) {
 //   console.log("file :" + req.file);
 //   console.log(req.body);
 // });
-
+// await Access.create({ roleid: 0, rolename: "superUser" });
+// await Access.create({ roleid: 1, rolename: "admin" });
+// await Access.create({ roleid: 2, rolename: "normalUser" });
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
