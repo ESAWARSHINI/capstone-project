@@ -62,4 +62,22 @@ async function getBookById(request, response) {
   obj ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
 }
 
-export default { getAllBooks, insertBook, updateBook, deleteBook, getBookById };
+async function searchBook(request, response) {
+  console.log(request.query);
+
+  const { search } = request.query;
+  const NOT_FOUND_MSG = { msg: "book not found" };
+  const obj = await bookService.searchBookFunction(search);
+  //response.send(obj ? obj : NOT_FOUND_MSG);
+  console.log(obj);
+  obj[0] >= 1 ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
+}
+
+export default {
+  getAllBooks,
+  insertBook,
+  updateBook,
+  deleteBook,
+  getBookById,
+  searchBook,
+};

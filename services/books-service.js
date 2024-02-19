@@ -1,4 +1,5 @@
 import { Book } from "../models/books.js";
+import { Op } from "sequelize";
 
 async function getAllBooksFunction(dbQuery) {
   return await Book.findAll(dbQuery);
@@ -35,10 +36,25 @@ async function getBookByIdFunction(id) {
   });
 }
 
+async function searchBookFunction(search) {
+  const obj = await Book.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${search}%` } },
+        { author: { [Op.like]: `%${search}%` } },
+        { genre: { [Op.like]: `%${search}%` } },
+        { description: { [Op.like]: `%${search}%` } },
+        { rating: { [Op.like]: `%${search}%` } },
+      ],
+    },
+  });
+}
+
 export default {
   getAllBooksFunction,
   insertBookFunction,
   updateBookFunction,
   deleteBookFunction,
   getBookByIdFunction,
+  searchBookFunction,
 };

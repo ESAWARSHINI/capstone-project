@@ -6,19 +6,19 @@ async function getUserFunction() {
   return await SignUp.findAll();
 }
 
-async function searchFunction(search) {
-  const searchResult = (await SignUp.findAll()).filter((obj) => {
-    var temp = obj.toJSON();
-    for (let key in temp) {
-      if (typeof temp[key] === "string" && temp[key].includes(search)) {
-        var temp1 = temp;
-      }
-    }
-    return temp1;
-  });
+// async function searchFunction(search) {
+//   const searchResult = (await SignUp.findAll()).filter((obj) => {
+//     var temp = obj.toJSON();
+//     for (let key in temp) {
+//       if (typeof temp[key] === "string" && temp[key].includes(search)) {
+//         var temp1 = temp;
+//       }
+//     }
+//     return temp1;
+//   });
 
-  return searchResult;
-}
+//   return searchResult;
+// }
 
 async function insertUserFunction(username, password, roleid) {
   try {
@@ -122,7 +122,7 @@ export default {
   insertUserFunction,
   getUserFunction,
   checkUserFunction,
-  searchFunction,
+
   createSessionFunction,
   updateProfileFunction,
   logoutProfileFunction,

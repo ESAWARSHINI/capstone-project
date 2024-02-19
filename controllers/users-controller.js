@@ -5,12 +5,12 @@ import userService from "../services/users-service.js";
 import jwt from "jsonwebtoken";
 
 async function getUsers(request, response) {
-  console.log(request.query);
-  if (request.query.search) {
-    response.send(await userService.searchFunction(request.query.search));
-  } else {
-    response.send(await userService.getUserFunction());
-  }
+  // console.log(request.query);
+  // if (request.query.search) {
+  //   response.send(await userService.searchFunction(request.query.search));
+  // } else {
+  response.send(await userService.getUserFunction());
+  // }
 }
 
 async function genHashPassword(password) {
