@@ -14,6 +14,15 @@ async function getAllBooks(request, response) {
     dbQuery.limit = limit;
   }
   // findAll({}) -> return all books
+  if ("search" in querys) {
+    const NOT_FOUND_MSG = { msg: "book not found" };
+
+    response.send(await bookService.searchBookFunction(querys.search));
+    return;
+    //response.send(obj ? obj : NOT_FOUND_MSG);
+    // console.log(dbQuery);
+    // obj[0] >= 1 ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
+  }
   response.send(await bookService.getAllBooksFunction(dbQuery));
 }
 
@@ -54,6 +63,7 @@ async function deleteBook(request, response) {
 }
 
 async function getBookById(request, response) {
+  console.log("inside getid ctrl");
   console.log(request.params);
   const { id } = request.params;
   const NOT_FOUND_MSG = { msg: "book not found" };
@@ -62,16 +72,16 @@ async function getBookById(request, response) {
   obj ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
 }
 
-async function searchBook(request, response) {
-  console.log(request.query);
+// async function searchBook(request, response) {
+//   console.log(request.query);
 
-  const { search } = request.query;
-  const NOT_FOUND_MSG = { msg: "book not found" };
-  const obj = await bookService.searchBookFunction(search);
-  //response.send(obj ? obj : NOT_FOUND_MSG);
-  console.log(obj);
-  obj[0] >= 1 ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
-}
+//   const { search } = request.query;
+//   const NOT_FOUND_MSG = { msg: "book not found" };
+//   const obj = await bookService.searchBookFunction(search);
+//   //response.send(obj ? obj : NOT_FOUND_MSG);
+//   console.log(obj);
+//   obj[0] >= 1 ? response.send(obj) : response.status(404).send(NOT_FOUND_MSG);
+// }
 
 export default {
   getAllBooks,
@@ -79,5 +89,4 @@ export default {
   updateBook,
   deleteBook,
   getBookById,
-  searchBook,
 };

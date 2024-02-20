@@ -9,8 +9,17 @@ async function getUsers(request, response) {
   // if (request.query.search) {
   //   response.send(await userService.searchFunction(request.query.search));
   // } else {
-  response.send(await userService.getUserFunction());
+  //response.send(await userService.getUserFunction());
   // }
+  const token = request.header("x-auth-token");
+  const rolename = await userService.getProfileFunction(token);
+  if (rolename == "superUser" || rolename == "admin") {
+    const obj = await userService.getUserFunction();
+    console.log("object :" + obj);
+    obj ? response.send(obj) : response.status(404).send({ msg: "some error" });
+  } else {
+    response.send({ msg: "you do not have access" });
+  }
 }
 
 async function genHashPassword(password) {
@@ -56,8 +65,9 @@ async function checkUser(request, response) {
 async function updateProfile(request, response) {
   const token = request.header("x-auth-token");
   const { profile } = request.body;
-
-  response.send(await userService.updateProfileFunction(token, profile));
+  if ("profile" in request.body) {
+    response.send(await userService.updateProfileFunction(token, profile));
+  }
 }
 
 async function logoutProfile(request, response) {

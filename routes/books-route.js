@@ -22,6 +22,4 @@ router
   //Find by id
   .get(auth, totalObject.getBookById);
 
-router.route("/search").get(totalObject.searchBook);
-
 export default router;

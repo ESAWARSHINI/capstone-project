@@ -37,7 +37,7 @@ async function getBookByIdFunction(id) {
 }
 
 async function searchBookFunction(search) {
-  const obj = await Book.findAll({
+  return await Book.findAll({
     where: {
       [Op.or]: [
         { title: { [Op.like]: `%${search}%` } },
